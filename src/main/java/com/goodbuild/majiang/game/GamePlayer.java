@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class GamePlayer {
     private int scores = 0;
-    private String userId;
+    protected Long userId;
 
     private List<MaJiang> maJiangs = new ArrayList<>();
     private List<MaJiang> pengList = new ArrayList<>();
@@ -28,7 +28,7 @@ public class GamePlayer {
     private List<MaJiang> chiList = new ArrayList<>();
     private Map<MaJiang, Integer> maJiangOutMap = new HashMap<>();
 
-    public GamePlayer(String userId, int scores) {
+    public GamePlayer(Long userId, int scores) {
         this.scores = scores;
         this.userId = userId;
     }
@@ -128,7 +128,7 @@ public class GamePlayer {
         this.scores = this.scores + scores;
     }
 
-    public String getUserId() {
+    public Long getUserId() {
         return userId;
     }
 

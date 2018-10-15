@@ -4,6 +4,7 @@ package com.goobuild.majiang;
 
 import com.goodbuild.majiang.PlayFactory;
 import com.goodbuild.majiang.config.Config;
+import com.goodbuild.majiang.domain.User;
 import com.goodbuild.majiang.game.GamePlayer;
 import com.goodbuild.majiang.game.MaJiang;
 import com.goodbuild.majiang.game.Play;
@@ -22,16 +23,19 @@ import java.util.*;
  */
 public class Main {
 
-    @Test
-    public void palyTest() throws Exception{
+    public static void main(String[] args) throws Exception {
+        palyTest();
+    }
+
+    public static void palyTest() throws Exception{
         Play play = testBasePlay();
-        GamePlayer curr = play.getCurrPlayer();
+        User curr = (User) play.getCurrPlayer();
         Scanner scanner = new Scanner(System.in);
-        System.out.println(String.format("请 %s 出牌: ", curr.getUserId()));
+        System.out.println(String.format("请 %s 出牌: ", curr.getUsername()));
         String outText = scanner.nextLine();
         boolean go = true;
         while (go) {
-            curr = play.getCurrPlayer();
+            curr = (User) play.getCurrPlayer();
             MaJiang maJiang = new MaJiang(outText);
             switch (outText) {
                 case "peng":
@@ -58,25 +62,29 @@ public class Main {
             }
 
             System.out.println();
-            System.out.println(String.format("请 %s 出牌: ", play.getCurrPlayer().getUserId()));
+            System.out.println(String.format("请 %s 出牌: ", curr.getUsername()));
             outText = scanner.nextLine();
         }
 
 
     }
 
-    public Play testBasePlay() throws Exception{
-        GamePlayer g1 = new GamePlayer("A用户", 100);
-        GamePlayer g2 = new GamePlayer("B用户", 100);
-        GamePlayer g3 = new GamePlayer("C用户", 100);
-        GamePlayer g4 = new GamePlayer("D用户", 100);
+    public static Play testBasePlay() throws Exception{
+       /* GamePlayer g1 = new GamePlayer(1, 100);
+        GamePlayer g2 = new GamePlayer(2, 100);
+        GamePlayer g3 = new GamePlayer(3, 100);
+        GamePlayer g4 = new GamePlayer(4, 100);*/
+        User user1 = new User(1L, 100, "张三");
+        User user2 = new User(2L, 100, "李四");
+        User user3 = new User(3L, 100,"王五");
+        User user4 = new User(4L, 100, "赵六");
 
         Play play = PlayFactory.createBasePlay(Config.MAX_GAMG_NUM_8);
 
-        play.addGamePlayer(g1);
-        play.addGamePlayer(g2);
-        play.addGamePlayer(g3);
-        play.addGamePlayer(g4);
+        play.addGamePlayer(user1);
+        play.addGamePlayer(user2);
+        play.addGamePlayer(user3);
+        play.addGamePlayer(user4);
 
         play.faPai();
 
@@ -87,7 +95,7 @@ public class Main {
 
 
     @Test
-    public void testHu() throws Exception {
+    public static void testHu() throws Exception {
         List<MaJiang> maJiangs = new ArrayList<>();
         maJiangs.add(new MaJiang("w6"));
         maJiangs.add(new MaJiang("w6"));

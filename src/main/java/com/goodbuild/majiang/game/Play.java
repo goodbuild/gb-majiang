@@ -278,6 +278,10 @@ public abstract class Play {
         return room.getCurrPlayer();
     }
 
+    public List<GamePlayer> getGamePlayers() {
+        return room.getPlayers();
+    }
+
     @Override
     public String toString() {
         return room.getPlayers().toString();

@@ -4,3 +4,4 @@ spring:
 
 server:
   port: 8080
+websocketServerPort: 8888

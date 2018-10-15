@@ -12,10 +12,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
 
 public class BaseRoomImpl implements Room {
-    private List<GamePlayer> players = new ArrayList<GamePlayer>();
-    private RoomStatusEnum roomStatus = RoomStatusEnum.WaitPlayerJoin;
+    private final CopyOnWriteArrayList<GamePlayer> players = new CopyOnWriteArrayList<GamePlayer>();
+    private final ConcurrentHashMap<Long, GamePlayer> playerMap = new ConcurrentHashMap<>();
+    private volatile RoomStatusEnum roomStatus = RoomStatusEnum.WaitPlayerJoin;
     private String roomNum;
     private int fixedPlayerNum;
     private int initMaJiangNum;
@@ -37,11 +41,12 @@ public class BaseRoomImpl implements Room {
         if (!this.roomStatus.equals(RoomStatusEnum.WaitPlayerJoin)) {
             throw new Exception(this.roomStatus.getName());
         }
+        if (playerMap.putIfAbsent(gamePlayer.getUserId(), gamePlayer) == null) {
+            this.players.add(gamePlayer);
 
-        this.players.add(gamePlayer);
-
-        if (this.players.size() == fixedPlayerNum) {
-            this.roomStatus = RoomStatusEnum.WaitFaPai;
+            if (this.players.size() == fixedPlayerNum) {
+                this.roomStatus = RoomStatusEnum.WaitFaPai;
+            }
         }
 
     }
