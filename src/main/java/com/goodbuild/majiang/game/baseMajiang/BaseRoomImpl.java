@@ -3,6 +3,7 @@ package com.goodbuild.majiang.game.baseMajiang;
 
 
 import com.goodbuild.majiang.enums.RoomStatusEnum;
+import com.goodbuild.majiang.exception.ExistentException;
 import com.goodbuild.majiang.exception.InsufficientPlayerException;
 import com.goodbuild.majiang.game.GamePlayer;
 import com.goodbuild.majiang.game.MaJiang;
@@ -42,17 +43,9 @@ public class BaseRoomImpl implements Room {
         }
 
 
-        /*
-         ?????? 这代码应该是操作数据库的，暂时屏蔽
-        if (playerMap.putIfAbsent(gamePlayer.getUserId(), gamePlayer) == null) {
-            this.players.add(gamePlayer);
-
-            if (this.players.size() == fixedPlayerNum) {
-                this.roomStatus = RoomStatusEnum.WaitFaPai;
-            }
+        if (players.contains(gamePlayer)) {
+            throw new ExistentException("成员已经加入");
         }
-        // ??????
-        */
 
             this.players.add(gamePlayer);
 
