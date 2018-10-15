@@ -60,8 +60,8 @@ public class BasePlayImpl extends Play {
             case mingGang:
                 return 3;
 
-             default:
-                 return 0;
+            default:
+                return 0;
         }
     }
 
@@ -70,3 +70,4 @@ public class BasePlayImpl extends Play {
         return isStart ? 0 : getCurrGamePlayerIndex();
     }
 }
+

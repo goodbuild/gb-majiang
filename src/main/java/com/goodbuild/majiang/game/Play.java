@@ -222,7 +222,7 @@ public abstract class Play {
             try {
                 winList = rules.ting(maJiangs);
             } catch (CanNotHuException e) {
-                e.printStackTrace();
+                //e.printStackTrace();
             }
             gamePlayer.setWinList(winList);
 

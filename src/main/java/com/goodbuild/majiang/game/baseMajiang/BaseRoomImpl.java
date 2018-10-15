@@ -17,9 +17,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 
 public class BaseRoomImpl implements Room {
-    private final CopyOnWriteArrayList<GamePlayer> players = new CopyOnWriteArrayList<GamePlayer>();
-    private final ConcurrentHashMap<Long, GamePlayer> playerMap = new ConcurrentHashMap<>();
-    private volatile RoomStatusEnum roomStatus = RoomStatusEnum.WaitPlayerJoin;
+    private List<GamePlayer> players = new ArrayList<GamePlayer>();
+    private RoomStatusEnum roomStatus = RoomStatusEnum.WaitPlayerJoin;
     private String roomNum;
     private int fixedPlayerNum;
     private int initMaJiangNum;
@@ -41,12 +40,24 @@ public class BaseRoomImpl implements Room {
         if (!this.roomStatus.equals(RoomStatusEnum.WaitPlayerJoin)) {
             throw new Exception(this.roomStatus.getName());
         }
+
+
+        /*
+         ?????? 这代码应该是操作数据库的，暂时屏蔽
         if (playerMap.putIfAbsent(gamePlayer.getUserId(), gamePlayer) == null) {
             this.players.add(gamePlayer);
 
             if (this.players.size() == fixedPlayerNum) {
                 this.roomStatus = RoomStatusEnum.WaitFaPai;
             }
+        }
+        // ??????
+        */
+
+            this.players.add(gamePlayer);
+
+        if (this.players.size() == fixedPlayerNum) {
+            this.roomStatus = RoomStatusEnum.WaitFaPai;
         }
 
     }

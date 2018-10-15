@@ -71,7 +71,7 @@ public class MaJiang {
                 this.getNum() == null ? "" : this.getNum(),
                 this.maJiangCardEnum.getcName(),
                 this.card
-                );
+        );
     }
 
     @Override

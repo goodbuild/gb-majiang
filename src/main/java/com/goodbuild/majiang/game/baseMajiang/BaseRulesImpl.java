@@ -75,12 +75,8 @@ public class BaseRulesImpl implements Rules {
             MaJiang two = list.get(i+1);
             MaJiang three = null;
 
-            try{
-                three = list.get(i+2);
-            } catch (Exception e) {
-            }
-
             try {
+                three = list.get(i+2);
                 if (one.getSortId() - three.getSortId() != Config.RANGE_AC) {// 本身不是ABC,但这里有个bug 就是 23456 这种糊147 会变成 47
                     huList.addAll(Utils.getChi(one, two, three));
                     checkout++;
@@ -97,6 +93,8 @@ public class BaseRulesImpl implements Rules {
                 i = i +2;
             } catch (IsGangException e) {
                 i = i + 3;
+            } catch (IndexOutOfBoundsException e) {
+                throw new CanNotHuException();
             }
 
             if (checkout > 3 || pengNum > 2) {
@@ -107,3 +105,4 @@ public class BaseRulesImpl implements Rules {
         return huList;
     }
 }
+
